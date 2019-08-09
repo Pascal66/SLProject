@@ -34,7 +34,7 @@ version as well as a single static instance of the OpenCV capture device.
 \n
 The live video image grabbing is not mandatory and can be replaced by the the
 top level application with its own video grabbing functionality. This is e.g.
-used in the iOS or Android examples. 
+used in the iOS or Android examples.
 The SLCVCapture::lastFrame and SLCVCapture::lastFrameGray are on the other
 hand used in all applications as the buffer for the last captured image.\n
 Alternatively SLCVCapture can open a video file by a given videoFilename.
@@ -75,7 +75,6 @@ class SLCVCapture
     static SLVideoType  videoType() { return _videoType; }
     static void         init();
     static SLGLTexture* videoTexture() { return _videoTexture; }
-    static SLGLTexture* videoTextureErr() { return _videoTextureErr; }
     static void         setVideoTexture();
 
     static SLCVMat       lastFrame;          //!< last frame grabbed in RGB
@@ -100,7 +99,6 @@ class SLCVCapture
 
     static SLVideoType  _videoType;       //!< Flag for using the live video image
     static SLGLTexture* _videoTexture;    //!< Texture for live video image
-    static SLGLTexture* _videoTextureErr; //!< Texture for live video error
 };
 //-----------------------------------------------------------------------------
 #endif // SLCVCAPTURE_H

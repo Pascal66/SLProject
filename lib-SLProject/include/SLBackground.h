@@ -13,6 +13,7 @@
 
 #include <SLGLVertexArray.h>
 #include <SLObject.h>
+#include <SLGLTexture.h>
 
 class SLGLTexture;
 
@@ -54,7 +55,7 @@ class SLBackground : public SLObject
     SLbool          _isUniform;    //!< Flag if background has uniform color
     SLVCol4f        _colors;       //!< Vector of 4 corner colors {TL,BL,TR,BR}
     SLGLTexture*    _texture;      //!< Pointer to a background texture
-    SLGLTexture*    _textureError; //!< Pointer to a error texture if background texture is not available
+    SLGLTexture     _textureError; //!< Pointer to a error texture if background texture is not available
     SLint           _resX;         //!< Background resolution in x-dir.
     SLint           _resY;         //!< Background resolution in y-dir.
     SLGLVertexArray _vao;          //!< OpenGL Vertex Array Object for drawing

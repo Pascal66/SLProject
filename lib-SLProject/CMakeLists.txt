@@ -1,4 +1,4 @@
-# 
+#
 # CMake congifuration for lib-SLProject
 #
 
@@ -107,6 +107,7 @@ file(GLOB headers
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SLSamples2D.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SLScene.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SLSceneView.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/SLSceneViewHandler.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SLSkeleton.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SLSphere.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SLSpheric.h
@@ -186,6 +187,7 @@ file(GLOB headers
     ${CMAKE_CURRENT_SOURCE_DIR}/source/SLSamples2D.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/SLScene.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/SLSceneView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/SLSceneViewHandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/SLSkeleton.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/SL/SLSkybox.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/SLSpheric.cpp
@@ -273,7 +275,7 @@ target_include_directories(${target}
 
 target_compile_definitions(${target}
   PRIVATE
-  
+
     PUBLIC
     ${compile_definitions}
     ${DEFAULT_COMPILE_DEFINITIONS}

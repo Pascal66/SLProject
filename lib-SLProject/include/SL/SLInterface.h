@@ -119,7 +119,7 @@ void   slLocationLLA(double latitudeDEG,
                      double longitudeDEG,
                      double altitudeM,
                      float  accuracyM);
-string slGetWindowTitle(int sceneViewIndex);
+string slGetWindowTitle();
 int    slGetVideoType();
 int    slGetVideoSizeIndex();
 //void   slGrabVideoFileFrame();

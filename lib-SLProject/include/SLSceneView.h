@@ -46,13 +46,13 @@ typedef void(SL_STDCALL* cbOnImGuiBuild)(SLScene* s, SLSceneView* sv);
 
 //-----------------------------------------------------------------------------
 //! SceneView class represents a dynamic real time 3D view onto the scene.
-/*!      
-The SLSceneView class has a pointer to an active camera that is used to 
-generate the 3D view into a window of the clients GUI system. 
+/*!
+The SLSceneView class has a pointer to an active camera that is used to
+generate the 3D view into a window of the clients GUI system.
 OpenGL ES2.0 or newer is used the default renderer for framebuffer rendering.
 Alternatively the sceneview can be rendered with a software ray tracing or
-path tracing renderer. 
-All mouse, touch, keyboard, resize and paint events of the GUI system are 
+path tracing renderer.
+All mouse, touch, keyboard, resize and paint events of the GUI system are
 handled in this class by the appropriate event handler methods.
 If the scene contains itself no camera node the sceneview provides its own
 camera object.
@@ -70,7 +70,6 @@ class SLSceneView : public SLObject
     void init(SLstring name,
               SLint    screenWidth,
               SLint    screenHeight,
-              void*    onWndUpdateCallback,
               void*    onSelectNodeMeshCallback,
               void*    onImGuiBBuild);
 
@@ -132,6 +131,8 @@ class SLSceneView : public SLObject
     SLbool   testRunIsFinished();
 
     // Callback routines
+    // TODO (for other rendering, sceneview should be inherited)
+    // For now set to function that to nothing and then disabling other renderer
     cbOnWndUpdate      onWndUpdate;        //!< C-Callback for intermediate window repaint
     cbOnSelectNodeMesh onSelectedNodeMesh; //!< C-Callback on node selection
 
@@ -178,10 +179,12 @@ class SLSceneView : public SLObject
     SLfloat       draw2DTimeMS() const { return _draw2DTimeMS; }
     SLNodeStats&  stats2D() { return _stats2D; }
     SLNodeStats&  stats3D() { return _stats3D; }
+    SLScene*      scene() { return _s; }
 
     static const SLint LONGTOUCH_MS; //!< Milliseconds duration of a long touch event
 
     protected:
+
     SLScene*   _s;
     SLuint     _index;           //!< index of this pointer in SLScene::sceneView vector
     SLGLState* _stateGL;         //!< Pointer to the global SLGLState instance

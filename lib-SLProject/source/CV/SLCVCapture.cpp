@@ -43,7 +43,6 @@ SLCVVSize        SLCVCapture::camSizes           = SLCVVSize();
 SLint            SLCVCapture::activeCamSizeIndex = -1;
 SLVideoType      SLCVCapture::_videoType         = SLVideoType::VT_NONE;
 SLGLTexture*     SLCVCapture::_videoTexture      = nullptr;
-SLGLTexture*     SLCVCapture::_videoTextureErr   = nullptr;
 
 //-----------------------------------------------------------------------------
 //! Opens the capture device and returns the frame size
@@ -780,12 +779,9 @@ void SLCVCapture::init()
 {
     // load default video image that is displayed when no live video is available
     _videoTexture    = new SLGLTexture();
-    _videoTextureErr = new SLGLTexture();
     _videoTexture->usesVideo(true);
-    //_videoTextureErr->usesVideo(true);
-    _videoTexture->setVideoImage("LiveVideoError.png");
-    _videoTextureErr->setVideoImage("LiveVideoError.png");
 
+#define SL_USES_CVCAPTURE 1
 #ifdef SL_USES_CVCAPTURE
 
     if (_videoType != VT_NONE)

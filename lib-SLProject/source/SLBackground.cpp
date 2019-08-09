@@ -34,7 +34,7 @@ SLBackground::SLBackground() : SLObject("Background")
     _colors.push_back(SLCol4f::BLACK); // top left
     _isUniform    = true;
     _texture      = nullptr;
-    _textureError = SLCVCapture::videoTextureErr(); // Fix for black video error
+    _textureError.setVideoImage(SLGLTexture::defaultPath + "LiveVideoError.png");
     _resX         = -1;
     _resY         = -1;
 }
@@ -173,7 +173,7 @@ void SLBackground::render(SLint widthPX, SLint heightPX)
         if (_texture->texName())
             _texture->bindActive(0);
         else
-            _textureError->bindActive(0);
+            _textureError.bindActive(0);
         sp->uniform1i("u_texture0", 0);
     }
 
