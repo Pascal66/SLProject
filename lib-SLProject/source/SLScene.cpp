@@ -60,8 +60,7 @@ As examples you can see it in:
   - _old/app-Demo-Qt: qtGLWidget::initializeGL()
   - _old/app-Viewer-Qt: qtGLWidget::initializeGL()
 */
-SLScene::SLScene(SLstring      name,
-                 cbOnSceneLoad onSceneLoadCallback)
+SLScene::SLScene(SLstring      name)
   : SLObject(name),
     _frameTimesMS(60, 0.0f),
     _vsyncTimesMS(60, 0.0f),
@@ -81,8 +80,6 @@ SLScene::SLScene(SLstring      name,
     _updateAnimTimesMS(60, 0.0f)
 {
     SLApplication::scene = this;
-
-    onLoad = onSceneLoadCallback;
 
     _root3D           = nullptr;
     _root2D           = nullptr;

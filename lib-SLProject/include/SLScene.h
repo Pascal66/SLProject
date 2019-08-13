@@ -37,7 +37,7 @@ typedef std::vector<SLCVTracked*> SLVCVTracker; //!< Vector of CV tracker pointe
 typedef void(SL_STDCALL* cbOnSceneLoad)(SLScene* s, SLSceneView* sv, SLint sceneID);
 //-----------------------------------------------------------------------------
 //! The SLScene class represents the top level instance holding the scene structure
-/*!      
+/*!
  The SLScene class holds everything that is common for all scene views such as
  the root pointer (_root3D) to the scene, an array of lights as well as the
  global resources (_meshes (SLMesh), _materials (SLMaterial), _textures
@@ -56,8 +56,7 @@ class SLScene : public SLObject
     friend class SLNode;
 
     public:
-    SLScene(SLstring      name,
-            cbOnSceneLoad onSceneLoadCallback);
+    SLScene(SLstring      name);
     ~SLScene();
     // Setters
     void root3D(SLNode* root3D) { _root3D = root3D; }
@@ -123,8 +122,6 @@ class SLScene : public SLObject
     // Video stuff
     SLVCVTracker& trackers() { return _trackers; }
     SLbool        showDetection() { return _showDetection; }
-
-    cbOnSceneLoad onLoad; //!< C-Callback for scene load
 
     // Misc.
     //virtual  void            onLoad              (SLSceneView* sv, SLCommand _currentID);

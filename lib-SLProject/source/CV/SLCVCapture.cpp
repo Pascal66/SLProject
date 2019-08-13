@@ -404,7 +404,7 @@ void SLCVCapture::loadIntoLastFrame(const SLint         width,
     }
 
     //TODO
-    adjustForSL(width);
+    adjustForSL((float)width/(float)height);
 }
 //-----------------------------------------------------------------------------
 //! YUV to RGB image infos. Offset value can be negative for mirrored copy.

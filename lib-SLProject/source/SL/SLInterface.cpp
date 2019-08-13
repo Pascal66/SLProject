@@ -92,7 +92,7 @@ void slCreateAppAndScene(SLVstring& cmdLineArgs,
     SL_LOG("GLSL Version    : %s (%s) \n", stateGL->glSLVersion().c_str(), stateGL->getSLVersionNO().c_str());
     SL_LOG("------------------------------------------------------------------\n");
 
-    SLApplication::createAppAndScene(applicationName, onSceneLoadCallback);
+    SLApplication::createAppAndScene(applicationName);
 }
 //-----------------------------------------------------------------------------
 /*! Global creation function for a SLSceneview instance returning the index of
@@ -143,10 +143,12 @@ int slCreateSceneView(int          screenWidth,
     // Set active sceneview and load scene. This is done for the first sceneview
     if (!SLApplication::scene->root3D())
     {
+        /*
         if (SLApplication::sceneID == SID_Empty)
             SLApplication::scene->onLoad(SLApplication::scene, sv, initScene);
         else
             SLApplication::scene->onLoad(SLApplication::scene, sv, SLApplication::sceneID);
+        */
     }
     else
         sv->onInitialize();

@@ -74,15 +74,14 @@ See examples usages in:
 /param applicationName The apps name
 /param onSceneLoadCallback C Callback function as void* pointer for the scene creation.
 */
-void SLApplication::createAppAndScene(SLstring appName,
-                                      void*    onSceneLoadCallback)
+void SLApplication::createAppAndScene(SLstring appName)
 {
     assert(SLApplication::scene == nullptr &&
            "You can create only one SLApplication");
 
     name = appName;
 
-    scene = new SLScene(name, (cbOnSceneLoad)onSceneLoadCallback);
+    scene = new SLScene(name);
 
     // This gets computerUser,-Name,-Brand,-Model,-OS,-OSVer,-Arch,-ID
     SLstring deviceString = getComputerInfos();
@@ -106,12 +105,12 @@ void SLApplication::createAppAndScene(SLstring appName,
 #endif
 }
 //-----------------------------------------------------------------------------
-void SLApplication::init()
+void SLApplication::init(std::string path)
 {
-    // Reset calibration process at scene change
-    if (SLApplication::activeCalib->state() != CS_calibrated &&
-        SLApplication::activeCalib->state() != CS_uncalibrated)
-        SLApplication::activeCalib->state(CS_uncalibrated);
+    SLGLProgram::defaultPath      = path + "/shaders/";
+    SLGLTexture::defaultPath      = path + "/textures/";
+    SLGLTexture::defaultPathFonts = path + "/fonts/";
+    SLApplication::configPath     = path + "/config/";
 
     // Deactivate in general the device sensors
     SLApplication::devRot.isUsed(false);

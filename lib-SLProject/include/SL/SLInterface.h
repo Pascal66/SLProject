@@ -40,8 +40,7 @@ void slCreateAppAndScene(SLVstring& cmdLineArgs,
                          SLstring   fontPath,
                          SLstring   calibrationPath,
                          SLstring   configPath,
-                         SLstring   applicationName,
-                         void*      onSceneLoadCallback = nullptr);
+                         SLstring   applicationName);
 
 int slCreateSceneView(int          screenWidth,
                       int          screenHeight,
