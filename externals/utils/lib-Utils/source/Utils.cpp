@@ -187,7 +187,7 @@ string getDateTime1String()
     sprintf(shortTime,
             "%.2d.%.2d.%.2d-%.2d:%.2d",
             t->tm_mday,
-            t->tm_mon,
+            t->tm_mon + 1,
             t->tm_year - 100,
             t->tm_hour,
             t->tm_min);
@@ -206,7 +206,7 @@ string getDateTime2String()
     sprintf(shortTime,
             "%.4d%.2d%.2d-%.2d%.2d%.2d",
             1900 + t->tm_year,
-            t->tm_mon,
+            t->tm_mon + 1,
             t->tm_mday,
             t->tm_hour,
             t->tm_min,
@@ -504,7 +504,7 @@ string getFileExt(const string& filename)
     return ("");
 }
 //-----------------------------------------------------------------------------
-//! Returns a vector of storted filesnames with path in dir
+//! Returns a vector of sorted filesnames with path in dir
 vector<string> getFileNamesInDir(const string& dirName)
 {
     vector<string> filePathNames;

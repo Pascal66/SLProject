@@ -19,31 +19,31 @@
 
 //-----------------------------------------------------------------------------
 
-AppDemoGuiTestOpen::AppDemoGuiTestOpen(const std::string& name, std::string saveDir, WAI::WAI* wai, WAICalibration* wc, SLNode* mapNode, bool* activator)
+AppDemoGuiTestOpen::AppDemoGuiTestOpen(const std::string& name,
+                                       WAICalibration*    wc,
+                                       SLNode*            mapNode,
+                                       bool*              activator)
   : AppDemoGuiInfosDialog(name, activator),
-    _wai(wai),
     _wc(wc),
     _mapNode(mapNode)
 {
-    _saveDir     = Utils::unifySlashes(saveDir);
-    _settingsDir = _saveDir + "TestSettings/";
     _currentItem = 0;
 
-    std::vector<std::string> content = Utils::getFileNamesInDir(_settingsDir);
-    for (auto path : content)
+    std::vector<std::string> content = Utils::getFileNamesInDir(WAIApp::experimentsDir);
+    for (std::string path : content)
     {
         _infos.push_back(openTestSettings(path));
     }
 }
 
-struct AppDemoGuiTestOpen::TestInfo AppDemoGuiTestOpen::openTestSettings(std::string path)
+AppDemoGuiTestOpen::TestInfo AppDemoGuiTestOpen::openTestSettings(std::string path)
 {
-    struct TestInfo infos;
+    TestInfo        infos;
     cv::FileStorage fs(path, cv::FileStorage::READ);
-    std::cout << path << std::endl;
+
     if (!fs.isOpened())
     {
-        std::cout << "File not open" << std::endl;
+        WAI_LOG("File not open");
         infos.open = false;
         return infos;
     }
@@ -58,11 +58,6 @@ struct AppDemoGuiTestOpen::TestInfo AppDemoGuiTestOpen::openTestSettings(std::st
     fs["Videos"] >> infos.vidPath;
     fs["Maps"] >> infos.mapPath;
 
-    infos.calPath = _saveDir + infos.calPath;
-    infos.vidPath = _saveDir + infos.vidPath;
-    infos.mapPath = _saveDir + infos.mapPath;
-    //std::string dbowPath = (std::string)n["DBOW"];
-
     fs.release();
 
     return infos;
@@ -74,7 +69,7 @@ void AppDemoGuiTestOpen::buildInfos(SLScene* s, SLSceneView* sv)
 
     if (_infos.size() == 0)
     {
-        ImGui::Text("There is no test to load");
+        ImGui::Text(std::string("There are no experiments in: " + WAIApp::experimentsDir).c_str());
         ImGui::End();
         return;
     }
@@ -83,26 +78,12 @@ void AppDemoGuiTestOpen::buildInfos(SLScene* s, SLSceneView* sv)
     {
         TestInfo info = _infos[_currentItem];
 
-        _wc->loadFromFile(info.calPath);
-
-        WAI::ModeOrbSlam2* mode = (WAI::ModeOrbSlam2*)_wai->getCurrentMode();
-        mode->requestStateIdle();
-        while (!mode->hasStateIdle())
+        OrbSlamStartResult result = WAIApp::startOrbSlam(info.vidPath, info.calPath, info.mapPath);
+        if (!result.wasSuccessful)
         {
-            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+            WAIApp::errorDial->setErrorMsg(result.errorString);
+            WAIApp::uiPrefs.showError = true;
         }
-        mode->reset();
-
-        WAIMapStorage::loadMap(mode->getMap(), mode->getKfDB(), _mapNode, info.mapPath, "");
-
-        std::cout << info.vidPath << std::endl;
-        CVCapture::instance()->videoType(VT_FILE);
-        CVCapture::instance()->videoFilename = info.vidPath;
-        CVCapture::instance()->videoLoops    = true;
-        CVCapture::instance()->openFile();
-
-        mode->resume();
-        mode->setInitialized(true);
     }
 
     ImGui::Separator();

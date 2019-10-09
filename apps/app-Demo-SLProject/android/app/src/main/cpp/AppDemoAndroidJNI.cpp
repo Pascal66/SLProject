@@ -22,7 +22,6 @@
 // Some global variable for the JNI interface
 JNIEnv *environment;    //! Pointer to JAVA environment used in ray tracing callback
 int svIndex;            //!< SceneView index
-std::string externalDirPathNative;
 //-----------------------------------------------------------------------------
 /*! Java Native Interface (JNI) function declarations. These functions are
 called by the Java interface class GLES3Lib. The function name follows the pattern
@@ -118,8 +117,8 @@ void JNICALL Java_ch_fhnw_comgr_GLES3Lib_onInit(JNIEnv *env, jclass obj, jint wi
 
     CVImage::defaultPath = devicePath + "/textures/";
     CVCapture::instance()->loadCalibrations(SLApplication::getComputerInfos(), // deviceInfo string
-                                            externalDirPathNative + "/config/",           // for calibrations made
-                                            externalDirPathNative + "/calibrations/",     // for calibInitPath
+                                            devicePath + "/config/",           // for calibrations made
+                                            devicePath + "/calibrations/",     // for calibInitPath
                                             devicePath + "/videos/");          // for videos
 
     ////////////////////////////////////////////////////
@@ -320,7 +319,7 @@ void JNICALL Java_ch_fhnw_comgr_GLES3Lib_onSetupExternalDir(JNIEnv *env,
                                                                       jclass obj,
                                                                       jstring  externalDirPath)
 {
-    externalDirPathNative = jstring2stdstring(env, externalDirPath);
+    std::string externalDirPathNative = jstring2stdstring(env, externalDirPath);
     slSetupExternalDir(externalDirPathNative);
 }
 //-----------------------------------------------------------------------------

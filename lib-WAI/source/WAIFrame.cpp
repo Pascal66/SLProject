@@ -30,6 +30,7 @@
 #include <WAIFrame.h>
 #include <WAIMapPoint.h>
 #include <OrbSlam/Converter.h>
+#include <AverageTiming.h>
 
 using namespace cv;
 
@@ -95,6 +96,7 @@ WAIFrame::WAIFrame(const cv::Mat& imGray, const double& timeStamp, KPextractor* 
   : mpORBextractorLeft(extractor), mTimeStamp(timeStamp), /*mK(K.clone()),*/ /*mDistCoef(distCoef.clone()),*/
     mpORBvocabulary(orbVocabulary)
 {
+    AVERAGE_TIMING_START("WAIFrame");
     //ghm1: ORB_SLAM uses float precision
     K.convertTo(mK, CV_32F);
     distCoef.convertTo(mDistCoef, CV_32F);
@@ -112,12 +114,15 @@ WAIFrame::WAIFrame(const cv::Mat& imGray, const double& timeStamp, KPextractor* 
     mvInvLevelSigma2  = mpORBextractorLeft->GetInverseScaleSigmaSquares();
 
     // ORB extraction
-    ExtractORB(imGray);
+    ExtractFeaturePoints(imGray);
 
     N = (int)mvKeys.size();
 
     if (mvKeys.empty())
+    {
+        AVERAGE_TIMING_STOP("WAIFrame");
         return;
+    }
 
     UndistortKeyPoints();
 
@@ -147,8 +152,11 @@ WAIFrame::WAIFrame(const cv::Mat& imGray, const double& timeStamp, KPextractor* 
     //store image reference if required
     if (retainImg)
         imgGray = imGray.clone();
+
+    AVERAGE_TIMING_STOP("WAIFrame");
 }
 
+// TODO(dgj1): used for chessboard marker initialization...
 WAIFrame::WAIFrame(const cv::Mat& imGray, KPextractor* extractor, cv::Mat& K, cv::Mat& distCoef, std::vector<cv::KeyPoint>& vKeys, ORBVocabulary* orbVocabulary, bool retainImg)
   : mpORBextractorLeft(extractor), mvKeys(vKeys), mpORBvocabulary(orbVocabulary)
 {
@@ -224,7 +232,7 @@ void WAIFrame::AssignFeaturesToGrid()
     }
 }
 //-----------------------------------------------------------------------------
-void WAIFrame::ExtractORB(const cv::Mat& im)
+void WAIFrame::ExtractFeaturePoints(const cv::Mat& im)
 {
     (*mpORBextractorLeft)(im, mvKeys, mDescriptors);
 }
