@@ -16,7 +16,6 @@
 #include <SLApplication.h>
 #include <CVCapture.h>
 #include <AppDemoGui.h>
-#include <AppDemoGui.h>
 #include <AppWAI.h>
 
 //-----------------------------------------------------------------------------
