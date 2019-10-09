@@ -570,7 +570,7 @@ public class GLES3Activity extends Activity implements View.OnTouchListener, Sen
             Log.i(TAG, "Exception: " + e.getMessage());
             _rotationSensorIsRunning = false;
         }
-        Log.d(TAG, "Rotation Sensor is running: "+ _rotationSensorIsRunning);
+        Log.i(TAG, "Rotation Sensor is running: "+ _rotationSensorIsRunning);
     }
 
     /**
@@ -594,7 +594,7 @@ public class GLES3Activity extends Activity implements View.OnTouchListener, Sen
             Log.i(TAG, "Exception: " + e.getMessage());
             _rotationSensorIsRunning = false;
         }
-        Log.d(TAG, "Rotation Sensor is running: "+ _rotationSensorIsRunning);
+        Log.i(TAG, "Rotation Sensor is running: "+ _rotationSensorIsRunning);
     }
 
     /**
@@ -622,7 +622,7 @@ public class GLES3Activity extends Activity implements View.OnTouchListener, Sen
         } else {
             _locationSensorIsRunning = false;
         }
-        Log.d(TAG, "GPS Sensor is running: "+ _locationSensorIsRunning);
+        Log.i(TAG, "GPS Sensor is running: "+ _locationSensorIsRunning);
     }
 
     /**
@@ -631,7 +631,7 @@ public class GLES3Activity extends Activity implements View.OnTouchListener, Sen
     @SuppressWarnings("ResourceType")
     public void locationSensorStop() {
         if (_locationListener != null) {
-            Log.d(TAG, "Removing _locationManager updates");
+            Log.i(TAG, "Removing _locationManager updates");
             _locationManager.removeUpdates(_locationListener);
             _locationListener = null;
         }
@@ -641,7 +641,7 @@ public class GLES3Activity extends Activity implements View.OnTouchListener, Sen
      * Stops location manager, then starts it.
      */
     public void locationSensorRestart() {
-        Log.d(TAG, "Restarting location managers");
+        Log.i(TAG, "Restarting location managers");
         locationSensorStop();
         locationSensorStart();
     }

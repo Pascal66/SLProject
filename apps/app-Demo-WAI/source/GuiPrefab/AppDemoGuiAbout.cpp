@@ -24,8 +24,8 @@ void AppDemoGuiAbout::centerNextWindow(SLSceneView* sv, SLfloat widthPC, SLfloat
 {
     SLfloat width  = (SLfloat)sv->scrW() * widthPC;
     SLfloat height = (SLfloat)sv->scrH() * heightPC;
-    ImGui::SetNextWindowSize(ImVec2(width, height), ImGuiSetCond_Always);
-    ImGui::SetNextWindowPosCenter(ImGuiSetCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(width, height), ImGuiCond_Always);
+    ImGui::SetNextWindowPosCenter(ImGuiCond_Always);
 }
 
 //-----------------------------------------------------------------------------

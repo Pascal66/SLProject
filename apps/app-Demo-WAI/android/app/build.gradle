@@ -11,14 +11,15 @@ android {
     }
     compileSdkVersion 29
     defaultConfig {
-        applicationId "ch.cpvr.wai"
+        applicationId "ch.fhnw.comgr"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 19
         versionName "2.0.019"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
-            abiFilters 'arm64-v8a'
+            // 'arm64-v8a' in ndk abiFilters cannot be present when splits abi filters are set : arm64-v8a
+            // abiFilters 'arm64-v8a'
         }
         externalNativeBuild {
             cmake {
@@ -28,6 +29,14 @@ android {
             }
         }
     }
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'arm64-v8a' //select ABIs to build APKs for
+            universalApk false //don't generate an additional APK that contains all the ABIs
+        }
+    }
     sourceSets {
         main {
             assets.srcDirs = ['src/main/assets']
@@ -35,12 +44,14 @@ android {
         debug {
             // NOTE(jan): This directory MUST contain a subfolder called arm64-v8a (or whatever ABI is built) that contains the libraries
             jniLibs.srcDirs = [
+                    '../../../../externals/prebuilt/andV8_opencv_4.1.1/Debug',
                     '../../../../externals/prebuilt/andV8_g2o/Debug'
             ]
         }
         release {
             // NOTE(jan): This directory MUST contain a subfolder called arm64-v8a (or whatever ABI is built) that contains the libraries
             jniLibs.srcDirs = [
+                    '../../../../externals/prebuilt/andV8_opencv_4.1.1/Release',
                     '../../../../externals/prebuilt/andV8_g2o/Release'
             ]
         }
@@ -64,7 +75,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
-    buildToolsVersion '29.0.1'
+    buildToolsVersion '29.0.2'
 }
 
 dependencies {

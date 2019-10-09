@@ -17,6 +17,7 @@
 #include <SLEnums.h>
 #include <SLVec2.h>
 #include <imgui.h>
+#include <imgui/imgui_internal.h>
 
 class SLScene;
 class SLSceneView;

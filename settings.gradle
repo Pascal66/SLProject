@@ -1,0 +1,8 @@
+//include ':DemoSLProject', ':app'
+//project(':DemoSLProject').projectDir = new File('apps/app-Demo-SLProject/android/app')
+
+include ':DemoWAI'
+project(':DemoWAI').projectDir = new File('apps/app-Demo-WAI/android/app')
+
+//include ':opencv-sdk'
+//project(':opencv-sdk').projectDir = new File('C:\\Users\\Pascal\\AndroidstudioProjects\\OpenCV-4.1.1-android-sdk\\sdk')

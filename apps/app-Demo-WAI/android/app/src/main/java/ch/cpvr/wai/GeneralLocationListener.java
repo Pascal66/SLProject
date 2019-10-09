@@ -19,6 +19,7 @@
 
 package ch.cpvr.wai;
 
+import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationProvider;
@@ -26,11 +27,11 @@ import android.os.Bundle;
 import android.util.Log;
 
 
-class GeneralLocationListener implements LocationListener {
+class GeneralLocationListener implements GpsStatus.Listener, LocationListener {
 
     private static String _listenerName;
     private static GLES3Activity _activity;
-    private static final String TAG = "WAIApp";
+    private static final String TAG = GeneralLocationListener.class.getSimpleName();
     protected String latestHdop;
     protected String latestPdop;
     protected String latestVdop;
@@ -42,6 +43,27 @@ class GeneralLocationListener implements LocationListener {
     GeneralLocationListener(GLES3Activity activity, String name) {
         _activity = activity;
         _listenerName = name;
+    }
+
+    @Override
+    public void onGpsStatusChanged(int event) {
+        switch (event) {
+            case GpsStatus.GPS_EVENT_STARTED:
+                // Do Something with mStatus info
+                break;
+
+            case GpsStatus.GPS_EVENT_STOPPED:
+                // Do Something with mStatus info
+                break;
+
+            case GpsStatus.GPS_EVENT_FIRST_FIX:
+                // Do Something with mStatus info
+                break;
+
+            case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
+                // Do Something with mStatus info
+                break;
+        }
     }
 
     /**
@@ -61,6 +83,8 @@ class GeneralLocationListener implements LocationListener {
         _activity.locationSensorRestart();
     }
 
+    //Constant was deprecated in API level 29. Location provider statuses are no longer supported.public
+    @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
         if (status == LocationProvider.OUT_OF_SERVICE) {
             Log.i(TAG, provider + " is out of service");

@@ -41,7 +41,8 @@ import java.util.Arrays;
  */
 @SuppressWarnings("MissingPermission")
 public class GLES3Camera2Service extends Service {
-    protected static final String TAG = "WAIApp";
+    protected static final String TAG = GLES3Camera2Service.class.getSimpleName();
+
     public static int videoType = CameraCharacteristics.LENS_FACING_BACK;
     public static int requestedVideoSizeIndex = -1; // see getRequestedSize
     public static boolean isTransitioning = false;
@@ -58,7 +59,7 @@ public class GLES3Camera2Service extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(TAG, "GLES3Camera2Service.onStartCommand flags " + flags + " startId " + startId);
+        Log.i(TAG, ":onStartCommand flags " + flags + " startId " + startId);
 
         CameraManager manager = (CameraManager) getSystemService(CAMERA_SERVICE);
         try {
@@ -70,7 +71,7 @@ public class GLES3Camera2Service extends Service {
                 imageReader.setOnImageAvailableListener(onImageAvailableListener, null); //GLES_ThreadHandler);
                 Log.i(TAG, "imageReader created");
             } else {
-                Log.i(TAG, "No imageReader created: videoSize is zero!");
+                Log.w(TAG, "No imageReader created: videoSize is zero!");
             }
         } catch (CameraAccessException e) {
             Log.e(TAG, e.getMessage());
@@ -120,7 +121,6 @@ public class GLES3Camera2Service extends Service {
         }
         return null;
     }
-
 
     /**
      * Returns the requested video size in pixel
@@ -324,7 +324,7 @@ public class GLES3Camera2Service extends Service {
 
     @Override
     public void onDestroy() {
-        Log.i(TAG, "GLES3Camera2Service.onDestroy");
+        Log.i(TAG, ":onDestroy");
         try {
             captureSession.abortCaptures();
         } catch (CameraAccessException e) {
@@ -342,7 +342,7 @@ public class GLES3Camera2Service extends Service {
         try {
             CaptureRequest.Builder builder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_RECORD);
 
-            // Turn off auto focus. We want to calibrate with the focus on infinty.
+            //Turn off auto focus. We want to calibrate with the focus on infinity.
             //builder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_OFF);
             //builder.set(CaptureRequest.LENS_FOCUS_DISTANCE,0.0f);
 

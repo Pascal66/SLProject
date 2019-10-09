@@ -578,7 +578,7 @@ void SLGLImGui::onCharInput(SLuint c)
 void SLGLImGui::onClose()
 {
     deleteOpenGLObjects();
-    ImGui::Shutdown();
+    ImGui::DestroyContext(ImGui::GetCurrentContext()); //)Shutdown();
 }
 //-----------------------------------------------------------------------------
 //! Renders an extra frame with the current mouse position
